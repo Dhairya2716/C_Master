@@ -5,6 +5,7 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp();
   Get.put(AuthController());
+  Get.put(ThemeController());
 
   runApp(const Myapp());
 }
@@ -16,15 +17,16 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     final isDark = box.read<bool>('isDarkMode') ?? false;
+    final themeCtrl = Get.find<ThemeController>();
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'C Master',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: Routes.LOGIN,
-      getPages: AppPages.routes,
-    );
+    return Obx(() => GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'C Master',
+          theme: AppTheme.lightTheme(themeCtrl.currentPalette),
+          darkTheme: AppTheme.darkTheme(themeCtrl.currentPalette),
+          themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+          initialRoute: Routes.LOGIN,
+          getPages: AppPages.routes,
+        ));
   }
 }

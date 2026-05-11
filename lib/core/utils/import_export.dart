@@ -26,6 +26,7 @@ export '../../models/user_model.dart';
 // Controllers
 export '../../controllers/auth_controller.dart';
 export '../../controllers/dashboard_controller.dart';
+export '../../controllers/theme_controller.dart';
 
 // Services
 export '../../services/auth_service.dart';
@@ -44,6 +45,7 @@ export '../../views/tutorial/topic_detail_page.dart';
 export '../../views/quiz/quiz_page.dart';
 export '../../views/quiz/result_page.dart';
 export '../../views/progress/progress_page.dart';
+export '../../views/bookmarks/bookmark_page.dart';
 
 // Mock Data
 export '../../views/tutorial/c_topics.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter_html/flutter_html.dart';
 import 'package:c_master/controllers/progress_controller.dart';
+import 'package:c_master/controllers/bookmark_controller.dart';
 import '../../core/utils/import_export.dart';
 
 class TopicDetailPage extends StatefulWidget {
@@ -34,7 +35,10 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final SubTopic subtopic = Get.arguments;
+    final args = Get.arguments as Map<String, dynamic>? ?? {};
+    final SubTopic subtopic = args['subtopic'] ?? Get.arguments;
+    final String topicTitle = args['topicTitle'] ?? 'Learning';
+    
     final cs = context.colors;
     final dark = context.isDark;
 
@@ -42,10 +46,34 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     final codeText = dark ? const Color(0xFF94D468) : const Color(0xFF50FA7B);
 
     final progressCtrl = Get.find<ProgressController>();
+    final bookmarkCtrl = Get.put(BookmarkController());
 
     return Scaffold(
       appBar: AppBar(
         title: Text(subtopic.title),
+        actions: [
+          Obx(() {
+            final isBookmarked = bookmarkCtrl.isBookmarked(topicTitle, subtopic.title);
+            return IconButton(
+              onPressed: () {
+                if (isBookmarked) {
+                  bookmarkCtrl.removeBookmark(topicTitle, subtopic.title);
+                } else {
+                  bookmarkCtrl.addBookmark(
+                    topicTitle: topicTitle,
+                    subtopicTitle: subtopic.title,
+                    content: subtopic.content,
+                  );
+                }
+              },
+              icon: Icon(
+                isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+                color: isBookmarked ? cs.primary : null,
+              ),
+              tooltip: isBookmarked ? 'Remove bookmark' : 'Add bookmark',
+            );
+          }),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(3),
           child: Align(

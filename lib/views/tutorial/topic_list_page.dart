@@ -150,7 +150,10 @@ class _TopicCard extends StatelessWidget {
             const Divider(height: 1, indent: 18, endIndent: 18),
             ...topic.subtopics.map<Widget>((subtopic) {
               return InkWell(
-                onTap: () => Get.toNamed(Routes.TOPIC_DETAIL, arguments: subtopic),
+                onTap: () => Get.toNamed(Routes.TOPIC_DETAIL, arguments: {
+                  'subtopic': subtopic,
+                  'topicTitle': topic.title,
+                }),
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),

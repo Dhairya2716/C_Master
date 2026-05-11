@@ -72,4 +72,71 @@ class FirestoreService {
       'quizAttempts': existing,
     }, SetOptions(merge: true));
   }
+
+  // ── Bookmarks ─────────────────────────────────────────────────────────────
+
+  Future<void> addBookmark(String uid, dynamic bookmark) async {
+    await _db
+        .collection('users')
+        .doc(uid)
+        .collection('bookmarks')
+        .doc('${bookmark.topicTitle}_${bookmark.subtopicTitle}')
+        .set(bookmark.toMap());
+  }
+
+  Future<List<dynamic>?> loadBookmarks(String uid) async {
+    try {
+      final snapshot = await _db
+          .collection('users')
+          .doc(uid)
+          .collection('bookmarks')
+          .get();
+
+      if (snapshot.docs.isEmpty) return null;
+
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> removeBookmark(String uid, String topicTitle, String subtopicTitle) async {
+    await _db
+        .collection('users')
+        .doc(uid)
+        .collection('bookmarks')
+        .doc('${topicTitle}_${subtopicTitle}')
+        .delete();
+  }
+
+  Future<void> clearBookmarks(String uid) async {
+    final snapshot = await _db
+        .collection('users')
+        .doc(uid)
+        .collection('bookmarks')
+        .get();
+
+    for (final doc in snapshot.docs) {
+      await doc.reference.delete();
+    }
+  }
+
+  // ── Theme Preferences ─────────────────────────────────────────────────────
+
+  Future<void> saveThemePreference(String uid, String paletteId) async {
+    await _db.collection('users').doc(uid).set({
+      'themePreference': paletteId,
+      'lastUpdated': DateTime.now().toIso8601String(),
+    }, SetOptions(merge: true));
+  }
+
+  Future<String?> loadThemePreference(String uid) async {
+    try {
+      final doc = await _db.collection('users').doc(uid).get();
+      if (doc.exists && doc.data() != null) {
+        return doc.data()!['themePreference'] as String?;
+      }
+    } catch (_) {}
+    return null;
+  }
 }

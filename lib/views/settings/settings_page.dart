@@ -1,4 +1,6 @@
 import 'package:c_master/controllers/settings_controller.dart';
+import 'package:c_master/controllers/theme_controller.dart';
+import 'package:c_master/core/constants/theme_palette.dart';
 import '../../core/utils/import_export.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -14,6 +16,7 @@ class SettingsPage extends StatelessWidget {
 
     final email = controller.user?.email ?? 'No email';
     final initial = email.isNotEmpty ? email[0].toUpperCase() : 'U';
+    final themeCtrl = Get.put(ThemeController());
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
@@ -127,6 +130,90 @@ class SettingsPage extends StatelessWidget {
                 ],
                 cs: cs,
               ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
+
+              const SizedBox(height: 16),
+
+              // ── Theme Colors ────────────────────────────────────────────
+              _SectionLabel(label: 'App Colors', cs: cs, tt: tt),
+              Container(
+                decoration: BoxDecoration(
+                  color: cs.surface,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Choose a color theme',
+                      style: tt.bodyMedium?.copyWith(
+                        color: cs.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: themeCtrl.availablePalettes.map((palette) {
+                        final isSelected = themeCtrl.currentThemeId.value == palette.id;
+                        return GestureDetector(
+                          onTap: () => themeCtrl.setTheme(palette.id),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [palette.lightPrimary, palette.lightSecondary],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  border: isSelected
+                                      ? Border.all(color: cs.onSurface, width: 3)
+                                      : Border.all(
+                                          color: cs.outline.withOpacity(0.2),
+                                          width: 1,
+                                        ),
+                                  boxShadow: isSelected
+                                      ? [
+                                          BoxShadow(
+                                            color: palette.lightPrimary.withOpacity(0.4),
+                                            blurRadius: 12,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ]
+                                      : [],
+                                ),
+                                child: isSelected
+                                    ? Icon(Icons.check_rounded, color: Colors.white, size: 28)
+                                    : null,
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                palette.name,
+                                style: tt.labelSmall?.copyWith(
+                                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                  color: isSelected ? cs.onSurface : cs.onSurface.withOpacity(0.6),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ).animate().fadeIn(delay: 150.ms, duration: 400.ms),
 
               const SizedBox(height: 16),
 
