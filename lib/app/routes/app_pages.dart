@@ -11,5 +11,6 @@ class AppPages {
     GetPage(name: Routes.QUIZ, page: () => QuizPage()),
     GetPage(name: Routes.QUIZ_RESULT, page: () => const ResultPage()),
     GetPage(name: Routes.PROGRESS, page: () => ProgressPage()),
+    GetPage(name: Routes.BOOKMARKS, page: () => BookmarkPage()),
   ];
 }
