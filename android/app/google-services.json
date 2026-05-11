@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "318254231451",
+    "project_id": "c-master-pro",
+    "storage_bucket": "c-master-pro.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318254231451:android:79aaa9d1b267e102047b3e",
+        "android_client_info": {
+          "package_name": "com.example.c_master"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZJRZLoNQTS0vD-By-l4ofP54MK-yAepM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318254231451:android:1e643fd4ce6f1648047b3e",
+        "android_client_info": {
+          "package_name": "com.example.c_master_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZJRZLoNQTS0vD-By-l4ofP54MK-yAepM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

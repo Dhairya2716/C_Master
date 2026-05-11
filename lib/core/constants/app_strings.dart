@@ -1,0 +1,17 @@
+const String LOGIN = "Login";
+const String EMAIL = "Email";
+const String PASSWORD = "Password";
+const String SIGN_IN_GOOGLE = "Sign in with Google";
+const String CREATE_ACCOUNT = "Create Account";
+const String REGISTER = "Register";
+const String C_APP_TITLE = "C Master";
+const String WELCOME_BACK = "Welcome Back 👋";
+const String C_SUBTITLE = "Continue mastering C programming";
+const String ACCESS = "Quick Access";
+const String LEARN_C = "Learn C";
+const String QUIZ = "quiz";
+const String PRACTICE_CODE = "Practise Code";
+const String BOOKMARKS = "Bookmarks";
+const String PROGRESS = "Progress";
+const String AI_ASSISTANT = "AI Assistant";
+const String USERS = "users";
